@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <transformation>
   <info>
-    <name>AnimeETL</name>
+    <name>AnimeETLcsv</name>
     <description/>
     <extended_description/>
     <trans_version/>
@@ -103,7 +103,7 @@
   <hop> <from>Remove Unranked</from><to>Select values</to><enabled>Y</enabled> </hop>
   <hop> <from>Modified Java Script Value</from><to>Remove Nulls</to><enabled>Y</enabled> </hop>
   <hop> <from>Remove Nulls</from><to>Remove Unranked</to><enabled>Y</enabled> </hop>
-  <hop> <from>Select values</from><to>PostgreSQL Bulk Loader</to><enabled>Y</enabled> </hop>
+  <hop> <from>Select values</from><to>Text file output</to><enabled>Y</enabled> </hop>
   </order>
   <step>
     <name>Json Input</name>
@@ -208,7 +208,7 @@
     <optimizationLevel>9</optimizationLevel>
     <jsScripts>      <jsScript>        <jsScript_type>0</jsScript_type>
         <jsScript_name>Script 1</jsScript_name>
-        <jsScript_script>Object.size &#x3d; function&#x28;obj&#x29; &#x7b;&#xd;&#xa;    var size &#x3d; 0, key&#x3b;&#xd;&#xa;    for &#x28;key in obj&#x29; &#x7b;&#xd;&#xa;        if &#x28;obj.hasOwnProperty&#x28;key&#x29;&#x29; size&#x2b;&#x2b;&#x3b;&#xd;&#xa;    &#x7d;&#xd;&#xa;    return size&#x3b;&#xd;&#xa;&#x7d;&#x3b;&#xd;&#xa;function get_type&#x28;thing&#x29;&#x7b;&#xd;&#xa;    if&#x28;thing&#x3d;&#x3d;&#x3d;null&#x29;return &#x22;&#x5b;object Null&#x5d;&#x22;&#x3b; &#x2f;&#x2f; special case&#xd;&#xa;    return Object.prototype.toString.call&#x28;thing&#x29;&#x3b;&#xd;&#xa;&#x7d;&#x3b;&#xd;&#xa;function get_strtime&#x28;thing&#x29;&#x7b;&#xd;&#xa;    if&#x28;thing&#x3d;&#x3d;&#x3d;null&#x29;return &#x22;0&#x22;&#x3b; &#x2f;&#x2f; special case&#xd;&#xa;	Alert&#x28;get_type&#x28;thing&#x29;&#x29;&#x3b;&#xd;&#xa;    return thing.num2str&#x28;&#x22;&#x23;&#x23;&#x23;&#x23;&#x23;&#x23;&#x23;&#x23;&#x23;&#x23;&#x22;&#x29;.getString&#x28;&#x29;&#x3b;&#xd;&#xa;&#x7d;&#x3b;&#xd;&#xa;&#x2f;&#x2f;Script here&#xd;&#xa;&#xd;&#xa;if&#x28;scores&#x21;&#x3d;&#x3d;null&#x29; &#xd;&#xa;&#x7b;	&#xd;&#xa;	&#xd;&#xa;	var scoresObj &#x3d; JSON.parse&#x28;scores&#x29;&#x3b;&#xd;&#xa;	var ranks &#x3d; Object.keys&#x28;scoresObj&#x29;&#x3b; 	&#xd;&#xa;	&#xd;&#xa;&#xd;&#xa;	&#x2f;&#x2f;for&#x28;i&#x3d;0&#x3b;i&#x3c;ranks.size&#x28;&#x29;&#x3b;i&#x2b;&#x2b;&#x29; &#xd;&#xa;	&#xd;&#xa;	for&#x28;i&#x3d;0&#x3b;i&#x3c;Object.size&#x28;ranks&#x29;&#x3b;i&#x2b;&#x2b;&#x29; &#xd;&#xa;	&#x7b;&#xd;&#xa;		&#x2f;&#x2f;var propName &#x3d; &#x22;AnimeID&#x22;&#x3b;&#xd;&#xa;		var propValue &#x3d; ranks&#x5b;i&#x5d;&#x3b;&#xd;&#xa;		&#xd;&#xa;&#xd;&#xa;		newRow &#x3d; createRowCopy&#x28;getOutputRowMeta&#x28;&#x29;.size&#x28;&#x29;&#x29;&#x3b;&#xd;&#xa;		var rowIndex &#x3d; getInputRowMeta&#x28;&#x29;.size&#x28;&#x29;&#x3b;&#xd;&#xa;		newRow&#x5b;rowIndex&#x2b;&#x2b;&#x5d; &#x3d; propValue&#x3b;&#xd;&#xa;		newRow&#x5b;rowIndex&#x2b;&#x2b;&#x5d; &#x3d; scoresObj&#x5b;propValue&#x5d;&#x5b;0&#x5d;&#x3b;&#xd;&#xa;		newRow&#x5b;rowIndex&#x2b;&#x2b;&#x5d; &#x3d; scoresObj&#x5b;propValue&#x5d;&#x5b;1&#x5d;&#x3b;&#xd;&#xa;		newRow&#x5b;rowIndex&#x2b;&#x2b;&#x5d; &#x3d; num2str&#x28;scoresObj&#x5b;propValue&#x5d;&#x5b;2&#x5d;,&#x22;&#x23;&#x23;&#x23;&#x23;&#x23;&#x23;&#x23;&#x23;&#x23;&#x23;&#x22;&#x29;&#x3b;&#xd;&#xa;&#xd;&#xa; 		&#xd;&#xa;		putRow&#x28;newRow&#x29;&#x3b;&#xd;&#xa;	&#x7d;		&#xd;&#xa;&#x7d;&#xd;&#xa;var AnimeID &#x3d; &#x22;&#x22;&#x3b;&#xd;&#xa;var rankings &#x3d; &#x22;&#x22;&#x3b;&#xd;&#xa;var started &#x3d; &#x22;&#x22;&#x3b;</jsScript_script>
+        <jsScript_script>Object.size &#x3d; function&#x28;obj&#x29; &#x7b;&#xd;&#xa;    var size &#x3d; 0, key&#x3b;&#xd;&#xa;    for &#x28;key in obj&#x29; &#x7b;&#xd;&#xa;        if &#x28;obj.hasOwnProperty&#x28;key&#x29;&#x29; size&#x2b;&#x2b;&#x3b;&#xd;&#xa;    &#x7d;&#xd;&#xa;    return size&#x3b;&#xd;&#xa;&#x7d;&#x3b;&#xd;&#xa;function get_type&#x28;thing&#x29;&#x7b;&#xd;&#xa;    if&#x28;thing&#x3d;&#x3d;&#x3d;null&#x29;return &#x22;&#x5b;object Null&#x5d;&#x22;&#x3b; &#x2f;&#x2f; special case&#xd;&#xa;    return Object.prototype.toString.call&#x28;thing&#x29;&#x3b;&#xd;&#xa;&#x7d;&#x3b;&#xd;&#xa;function get_strtime&#x28;thing&#x29;&#x7b;&#xd;&#xa;    if&#x28;thing&#x3d;&#x3d;&#x3d;null&#x29;return &#x22;0&#x22;&#x3b; &#x2f;&#x2f; special case&#xd;&#xa;	Alert&#x28;get_type&#x28;thing&#x29;&#x29;&#x3b;&#xd;&#xa;    return thing.num2str&#x28;&#x22;&#x23;&#x23;&#x23;&#x23;&#x23;&#x23;&#x23;&#x23;&#x23;&#x23;&#x22;&#x29;.getString&#x28;&#x29;&#x3b;&#xd;&#xa;&#x7d;&#x3b;&#xd;&#xa;&#x2f;&#x2f;Script here&#xd;&#xa;&#xd;&#xa;if&#x28;scores&#x21;&#x3d;&#x3d;null&#x29; &#xd;&#xa;&#x7b;	&#xd;&#xa;	&#xd;&#xa;	var scoresObj &#x3d; JSON.parse&#x28;scores&#x29;&#x3b;&#xd;&#xa;	var ranks &#x3d; Object.keys&#x28;scoresObj&#x29;&#x3b; 	&#xd;&#xa;	&#xd;&#xa;&#xd;&#xa;	&#x2f;&#x2f;for&#x28;i&#x3d;0&#x3b;i&#x3c;ranks.size&#x28;&#x29;&#x3b;i&#x2b;&#x2b;&#x29; &#xd;&#xa;	&#xd;&#xa;	for&#x28;i&#x3d;0&#x3b;i&#x3c;Object.size&#x28;ranks&#x29;&#x3b;i&#x2b;&#x2b;&#x29; &#xd;&#xa;	&#x7b;&#xd;&#xa;		&#x2f;&#x2f;var propName &#x3d; &#x22;AnimeID&#x22;&#x3b;&#xd;&#xa;		var propValue &#x3d; ranks&#x5b;i&#x5d;&#x3b;&#xd;&#xa;&#xd;&#xa;		newRow &#x3d; createRowCopy&#x28;getOutputRowMeta&#x28;&#x29;.size&#x28;&#x29;&#x29;&#x3b;&#xd;&#xa;		var rowIndex &#x3d; getInputRowMeta&#x28;&#x29;.size&#x28;&#x29;&#x3b;&#xd;&#xa;		newRow&#x5b;rowIndex&#x2b;&#x2b;&#x5d; &#x3d; propValue&#x3b;&#xd;&#xa;		newRow&#x5b;rowIndex&#x2b;&#x2b;&#x5d; &#x3d; scoresObj&#x5b;propValue&#x5d;&#x5b;0&#x5d;&#x3b;&#xd;&#xa;		newRow&#x5b;rowIndex&#x2b;&#x2b;&#x5d; &#x3d; scoresObj&#x5b;propValue&#x5d;&#x5b;1&#x5d;&#x3b;&#xd;&#xa;		newRow&#x5b;rowIndex&#x2b;&#x2b;&#x5d; &#x3d; num2str&#x28;scoresObj&#x5b;propValue&#x5d;&#x5b;2&#x5d;,&#x22;&#x23;&#x23;&#x23;&#x23;&#x23;&#x23;&#x23;&#x23;&#x23;&#x23;&#x22;&#x29;&#x3b;&#xd;&#xa;&#xd;&#xa; 		&#xd;&#xa;		putRow&#x28;newRow&#x29;&#x3b;&#xd;&#xa;	&#x7d;		&#xd;&#xa;&#x7d;&#xd;&#xa;var AnimeID &#x3d; &#x22;&#x22;&#x3b;&#xd;&#xa;var rankings &#x3d; &#x22;&#x22;&#x3b;&#xd;&#xa;var started &#x3d; &#x22;&#x22;&#x3b;</jsScript_script>
       </jsScript>      <jsScript>        <jsScript_type>-1</jsScript_type>
         <jsScript_name>num2str_Sample</jsScript_name>
         <jsScript_script>&#x2f;&#x2f; Converts a numeric Value to a String with the&#xa;&#x2f;&#x2f; given format.&#xa;&#x2f;&#x2f;&#xa;&#x2f;&#x2f; Usage&#x3a;&#xa;&#x2f;&#x2f; num2str&#x28;var&#x29;&#x3b;&#xa;&#x2f;&#x2f; 1. String - The String to convert.&#xa;&#x2f;&#x2f; The converstation uses the standard localized format.&#xa;&#x2f;&#x2f;&#xa;&#x2f;&#x2f; num2str&#x28;var,var&#x29;&#x3b;&#xa;&#x2f;&#x2f; 1. String - The String to convert.&#xa;&#x2f;&#x2f; 2. String - The Format &#xa;&#x2f;&#x2f;&#xa;&#x2f;&#x2f; num2str&#x28;var,var,var&#x29;&#x3b;&#xa;&#x2f;&#x2f; 1. String - The String to convert.&#xa;&#x2f;&#x2f; 2. String - The Format&#xa;&#x2f;&#x2f; 3&#x3a; String - The Locale Parameter&#xa;&#x2f;&#x2f; An valid ISO Language Code. &#x28;DE &#x3d; German, EN &#x3d; English, FR &#x3d; France, ...&#x29;&#xa;&#x2f;&#x2f; &#xa;&#x2f;&#x2f; 2006-11-15&#xa;&#x2f;&#x2f;&#xa;var d1 &#x3d; 123.40&#x3b;&#xa;var d2 &#x3d; -123.40&#x3b;&#xa;Alert&#x28;num2str&#x28;d1&#x29;&#x29;&#x3b;&#xa;Alert&#x28;num2str&#x28;d1, &#x22;0.00&#x22;&#x29;&#x29;&#x3b;&#xa;Alert&#x28;num2str&#x28;d1, &#x22;0.00&#x22;, &#x22;EN&#x22;&#x29;&#x29;&#x3b;&#xa;Alert&#x28;num2str&#x28;d2, &#x22;0.00&#x3b;&#x28;0.00&#x29;&#x22;, &#x22;EN&#x22;&#x29;&#x29;&#x3b;&#xa;      </jsScript_script>
@@ -240,54 +240,6 @@
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>301</xloc>
       <yloc>216</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>PostgreSQL Bulk Loader</name>
-    <type>PGBulkLoader</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <connection>animedb</connection>
-    <schema>preferences</schema>
-    <table>taste_preferences</table>
-    <load_action>INSERT</load_action>
-    <PsqlPath>c&#x3a;&#x5c;PROGRA&#x7e;1&#x5c;PostgreSQL&#x5c;9.3&#x5c;bin&#x5c;psql.exe</PsqlPath>
-    <dbname_override/>
-    <enclosure>&#x22;</enclosure>
-    <delimiter>&#x3b;</delimiter>
-    <stop_on_error>Y</stop_on_error>
-      <mapping>
-        <stream_name>user_id</stream_name>
-        <field_name>user_id</field_name>
-        <date_mask/>
-      </mapping>
-      <mapping>
-        <stream_name>item_id</stream_name>
-        <field_name>item_id</field_name>
-        <date_mask/>
-      </mapping>
-      <mapping>
-        <stream_name>preference</stream_name>
-        <field_name>preference</field_name>
-        <date_mask/>
-      </mapping>
-      <mapping>
-        <stream_name>timestamp</stream_name>
-        <field_name>timestamp</field_name>
-        <date_mask/>
-      </mapping>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>914</xloc>
-      <yloc>214</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -365,10 +317,6 @@
         <rename/>
         <length>-2</length>
         <precision>-2</precision>
-      </field>      <field>        <name>id</name>
-        <rename>user_id</rename>
-        <length>-2</length>
-        <precision>-2</precision>
       </field>      <field>        <name>username</name>
         <rename/>
         <length>-2</length>
@@ -392,27 +340,13 @@
       </field>        <select_unspecified>Y</select_unspecified>
       <remove>        <name>line</name>
       </remove>      <remove>        <name>scores</name>
-      </remove>      <remove>        <name>username</name>
       </remove>      <remove>        <name>status</name>
-      </remove>      <meta>        <name>started</name>
-        <rename>timestamp</rename>
-        <type>BigNumber</type>
-        <length>-2</length>
-        <precision>-2</precision>
-        <conversion_mask>&#x23;</conversion_mask>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>    </fields>     <cluster_schema/>
+      </remove>      <remove>        <name>started</name>
+      </remove>      <remove>        <name>id</name>
+      </remove>    </fields>     <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>759</xloc>
-      <yloc>210</yloc>
+      <xloc>744</xloc>
+      <yloc>214</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -516,6 +450,94 @@
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>56</xloc>
       <yloc>216</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Text file output</name>
+    <type>TextFileOutput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <separator>,</separator>
+    <enclosure>&#x22;</enclosure>
+    <enclosure_forced>N</enclosure_forced>
+    <enclosure_fix_disabled>Y</enclosure_fix_disabled>
+    <header>Y</header>
+    <footer>N</footer>
+    <format>UNIX</format>
+    <compression>None</compression>
+    <encoding>windows-1252</encoding>
+    <endedLine/>
+    <fileNameInField>N</fileNameInField>
+    <fileNameField/>
+    <create_parent_folder>Y</create_parent_folder>
+    <file>
+      <name>C&#x3a;&#x5c;MastersFinalProjectFiles&#x5c;ETL&#x5c;AnimeETL-PDI&#x5c;output&#x5c;rankings</name>
+      <is_command>N</is_command>
+      <servlet_output>N</servlet_output>
+      <do_not_open_new_file_init>N</do_not_open_new_file_init>
+      <extention>csv</extention>
+      <append>N</append>
+      <split>N</split>
+      <haspartno>N</haspartno>
+      <add_date>N</add_date>
+      <add_time>N</add_time>
+      <SpecifyFormat>N</SpecifyFormat>
+      <date_time_format/>
+      <add_to_result_filenames>Y</add_to_result_filenames>
+      <pad>N</pad>
+      <fast_dump>N</fast_dump>
+      <splitevery>0</splitevery>
+    </file>
+    <fields>
+      <field>
+        <name>username</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>none</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>item_id</name>
+        <type>Integer</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>none</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>preference</name>
+        <type>Integer</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>none</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+    </fields>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>869</xloc>
+      <yloc>214</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
